@@ -191,7 +191,7 @@ class Transaction {
         self.dateSupplier = dateSupplier
     }
     
-    func addDrink(drink: Drink, options: [DrinkDecorator] = []) {
+    func addDrink(_ drink: Drink, options: [DrinkDecorator] = []) {
         drinks.append(
             options.reduce(drink) { (result, option) -> DrinkProtocol in
                 option.decoratingDrink = result
@@ -243,9 +243,9 @@ class TestSuite: XCTestCase {
         
         // 3 beers
         let transaction = Transaction(dateSupplier: dateSupplier)
-        transaction.addDrink(drink: .beer)
-        transaction.addDrink(drink: .beer)
-        transaction.addDrink(drink: .beer)
+        transaction.addDrink(.beer)
+        transaction.addDrink(.beer)
+        transaction.addDrink(.beer)
         let cost = transaction.finalise().cost
         
         // Normal price (3x beer price)
@@ -258,9 +258,9 @@ class TestSuite: XCTestCase {
         
         // 3 beers
         let transaction = Transaction(dateSupplier: dateSupplier)
-        transaction.addDrink(drink: .beer)
-        transaction.addDrink(drink: .beer)
-        transaction.addDrink(drink: .beer)
+        transaction.addDrink(.beer)
+        transaction.addDrink(.beer)
+        transaction.addDrink(.beer)
         let cost = transaction.finalise().cost
         
         // Normal price (3x beer price)
@@ -273,9 +273,9 @@ class TestSuite: XCTestCase {
         
         // 3 beers
         let transaction = Transaction(dateSupplier: dateSupplier)
-        transaction.addDrink(drink: .beer)
-        transaction.addDrink(drink: .beer)
-        transaction.addDrink(drink: .beer)
+        transaction.addDrink(.beer)
+        transaction.addDrink(.beer)
+        transaction.addDrink(.beer)
         let cost = transaction.finalise().cost
         
         // Special price (1x beer price)
@@ -288,10 +288,10 @@ class TestSuite: XCTestCase {
         
         // 4 beers
         let transaction = Transaction(dateSupplier: dateSupplier)
-        transaction.addDrink(drink: .beer)
-        transaction.addDrink(drink: .beer)
-        transaction.addDrink(drink: .beer)
-        transaction.addDrink(drink: .beer)
+        transaction.addDrink(.beer)
+        transaction.addDrink(.beer)
+        transaction.addDrink(.beer)
+        transaction.addDrink(.beer)
         let cost = transaction.finalise().cost
         
         // Special price (1x beer price + the one extra beer)
@@ -302,7 +302,7 @@ class TestSuite: XCTestCase {
     
     private func getCostOfDrink(_ drink: Drink, options: [DrinkDecorator] = []) -> Decimal {
         let transaction = Transaction()
-        transaction.addDrink(drink: drink, options: options)
+        transaction.addDrink(drink, options: options)
         return transaction.finalise().cost
     }
     
@@ -330,17 +330,17 @@ XCTestSuite.default.run()
 // Examples
 
 let transaction = Transaction()
-transaction.addDrink(drink: .beer)
-transaction.addDrink(drink: .spiritsAndLiqueurs, options: [DrinkOptionDouble()])
-transaction.addDrink(drink: .wine, options: [DrinkOptionBottle()])
+transaction.addDrink(.beer)
+transaction.addDrink(.spiritsAndLiqueurs, options: [DrinkOptionDouble()])
+transaction.addDrink(.wine, options: [DrinkOptionBottle()])
 print(transaction.finalise().description)
 
 print("--------\n")
 
 let transaction2 = Transaction(dateSupplier: TestSuite.FakeDate(day: 22, month: 2, year: 2019, hour: 19))
-transaction2.addDrink(drink: .beer)
-transaction2.addDrink(drink: .beer)
-transaction2.addDrink(drink: .spiritsAndLiqueurs, options: [DrinkOptionDouble()])
-transaction2.addDrink(drink: .wine, options: [DrinkOptionBottle()])
+transaction2.addDrink(.beer)
+transaction2.addDrink(.beer)
+transaction2.addDrink(.spiritsAndLiqueurs, options: [DrinkOptionDouble()])
+transaction2.addDrink(.wine, options: [DrinkOptionBottle()])
 print(transaction2.finalise().description)
 
