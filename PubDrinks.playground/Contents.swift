@@ -286,7 +286,7 @@ class TestSuite: XCTestCase {
         // Friday 22/02/2019 @ 19:00
         let dateSupplier = FakeDate(day: 22, month: 2, year: 2019, hour: 19)
         
-        // 3 beers
+        // 4 beers
         let transaction = Transaction(dateSupplier: dateSupplier)
         transaction.addDrink(drink: .beer)
         transaction.addDrink(drink: .beer)
@@ -294,7 +294,7 @@ class TestSuite: XCTestCase {
         transaction.addDrink(drink: .beer)
         let cost = transaction.finalise().cost
         
-        // Special price (1x beer price) + the one extra beer
+        // Special price (1x beer price + the one extra beer)
         XCTAssert(cost.isEqual(to: (3.99 + 3.99).currency))
     }
     
